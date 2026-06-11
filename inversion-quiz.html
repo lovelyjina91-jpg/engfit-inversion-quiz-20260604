@@ -468,8 +468,9 @@ function result(){
   const d=new Date();
   $('rDate').textContent=d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate()+'  도치구문 퀴즈';
   $('progBar').style.width='100%';
-  const rv=$('review'); rv.classList.remove('show'); rv.innerHTML='';
-  $('reviewBtn').textContent='틀린 문제 다시 보기'+(wrong.length?' ('+wrong.length+')':'');
+  buildReview();
+  const rv=$('review'); rv.classList.add('show');   // 마지막 페이지에 틀린 문제+해설 자동 표시
+  $('reviewBtn').textContent = wrong.length ? '틀린 문제 접기' : '복습 닫기';
   show('screenResult');
 }
 
@@ -489,23 +490,42 @@ function buildReview(){
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
 async function shareResult(){
   const card=$('resultCard');
+  const pct=Math.round(score/BANK.length*100);
+  const text=studentName+' 도치구문 퀴즈 결과: '+score+'/'+BANK.length+' ('+pct+'%)';
   let canvas;
   try{ canvas=await html2canvas(card,{backgroundColor:'#ffffff',scale:2}); }
-  catch(e){ toast('이미지 생성 실패. 화면을 캡처해서 보내주세요.'); return; }
-  const text=studentName+' 도치구문 퀴즈 결과: '+score+'/'+BANK.length+' ('+Math.round(score/BANK.length*100)+'%)';
+  catch(e){ copyText(text); return; }
   canvas.toBlob(async(blob)=>{
+    if(!blob){ copyText(text); return; }
     const file=new File([blob],'inversion-quiz-result.png',{type:'image/png'});
+    // 1) 모바일 등: 파일 공유 시트(→ 카카오톡 선택)
     if(navigator.canShare && navigator.canShare({files:[file]})){
       try{ await navigator.share({files:[file], title:'도치구문 퀴즈 결과', text}); return; }
       catch(e){ if(e.name==='AbortError') return; }
     }
+    // 2) PC: 결과 이미지를 클립보드에 복사 → 카톡 대화창에 Ctrl+V
+    try{
+      if(navigator.clipboard && window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        toast('✅ 결과 이미지를 복사했어요! 카톡 대화창에 붙여넣기(Ctrl+V) 하세요.');
+        return;
+      }
+    }catch(e){}
+    // 3) 텍스트 공유 시트
     if(navigator.share){
       try{ await navigator.share({title:'도치구문 퀴즈 결과', text, url:location.href}); return; }
       catch(e){ if(e.name==='AbortError') return; }
     }
-    const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='inversion-quiz-result.png'; a.click();
-    toast('결과 이미지를 저장했어요. 카톡으로 보내주세요!');
+    // 4) 최후: 이미지 다운로드
+    try{
+      const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='inversion-quiz-result.png'; a.click();
+      toast('결과 이미지를 저장했어요. 카톡으로 보내주세요!');
+    }catch(e){ copyText(text); }
   },'image/png');
+}
+async function copyText(text){
+  try{ await navigator.clipboard.writeText(text); toast('✅ 결과를 텍스트로 복사했어요! 카톡에 붙여넣기 하세요.'); }
+  catch(e){ toast('복사가 안 돼요. 화면을 캡처해서 보내주세요.'); }
 }
 
 /* ===== 이벤트 ===== */
@@ -513,7 +533,7 @@ $('startBtn').onclick=start;
 $('nameInput').addEventListener('keydown',e=>{ if(e.key==='Enter') start(); });
 $('shareBtn').onclick=shareResult;
 $('retryBtn').onclick=start;
-$('reviewBtn').onclick=()=>{ const rv=$('review'); if(!rv.classList.contains('show')){ buildReview(); rv.classList.add('show'); rv.scrollIntoView({behavior:'smooth'}); } else { rv.classList.remove('show'); } };
+$('reviewBtn').onclick=()=>{ const rv=$('review'); const sh=rv.classList.toggle('show'); $('reviewBtn').textContent = sh ? '틀린 문제 접기' : '틀린 문제 다시 보기'+(wrong.length?' ('+wrong.length+')':''); if(sh) rv.scrollIntoView({behavior:'smooth'}); };
 
 show('screenStart');
 </script>
