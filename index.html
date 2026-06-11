@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영핏영어 · 도치구문 퀴즈</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --bg:#F4F6F8; --card:#FFFFFF; --ink:#13171C; --gray:#4B535C;
+    --green:#157A3A; --greenbg:#DCEFE0; --gold:#B45309; --goldbg:#FBEBD3;
+    --navy:#1B2970; --blue:#1D4ED8; --bluebg:#DEE6FB;
+    --red:#C81E1E; --redbg:#FBE3E3; --line:#D7DCE3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Pretendard',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.4;
+    min-height:100%;
+  }
+  .wrap{max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column;
+    padding:clamp(16px,3.5vw,32px);}
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px;}
+  .logo{font-size:clamp(16px,3vw,22px); font-weight:800; color:var(--gray); letter-spacing:-.02em;}
+  .logo b{color:var(--green)}
+  .score-pill{font-size:clamp(15px,2.6vw,20px); font-weight:800; color:var(--navy);
+    background:var(--bluebg); padding:6px 16px; border-radius:999px;}
+  /* progress */
+  .prog{height:10px; background:#E4E8EE; border-radius:999px; overflow:hidden; margin-bottom:6px;}
+  .prog > i{display:block; height:100%; width:0; background:var(--green); border-radius:999px; transition:width .3s ease;}
+  .prog-label{font-size:clamp(13px,2.3vw,16px); color:var(--gray); font-weight:700; margin-bottom:22px;}
+
+  .screen{flex:1; display:flex; flex-direction:column; justify-content:center; animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
+
+  /* start */
+  .start-title{font-size:clamp(30px,7vw,58px); font-weight:800; letter-spacing:-.03em; line-height:1.1;}
+  .start-title .o{color:var(--gold)}
+  .start-sub{font-size:clamp(16px,3.4vw,24px); color:var(--gray); font-weight:600; margin-top:16px; line-height:1.5;}
+  .name-row{margin-top:34px;}
+  .name-row label{display:block; font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--navy); margin-bottom:10px;}
+  input.name{width:100%; font-family:inherit; font-size:clamp(18px,3.8vw,26px); font-weight:700; color:var(--ink);
+    background:var(--card); border:2.5px solid var(--line); border-radius:14px; padding:14px 18px; outline:none;}
+  input.name:focus{border-color:var(--green);}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; cursor:pointer;
+    font-family:inherit; font-weight:800; border:none; border-radius:14px; transition:transform .08s ease, background .2s ease;}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--green); color:#fff; font-size:clamp(19px,3.8vw,26px); padding:16px 26px; width:100%; margin-top:26px;}
+  .btn-primary:hover{background:#11652f}
+  .hintline{font-size:clamp(13px,2.4vw,16px); color:var(--gray); margin-top:18px; line-height:1.5;}
+
+  /* question */
+  .qtag{display:inline-block; font-size:clamp(13px,2.4vw,17px); font-weight:800; letter-spacing:.04em;
+    color:var(--gold); background:var(--goldbg); padding:5px 14px; border-radius:999px; margin-bottom:18px; align-self:flex-start;}
+  .qprompt{font-size:clamp(22px,4.6vw,40px); font-weight:800; line-height:1.4; letter-spacing:-.01em; margin-bottom:8px;}
+  .qprompt .slot{display:inline-block; min-width:2.4em; text-align:center; color:var(--gold);
+    border-bottom:.18em solid var(--gold); margin:0 .12em;}
+  .qprompt .slot.ok{color:var(--green); border-bottom-color:transparent;}
+  .qprompt .slot.no{color:var(--red); border-bottom-color:transparent;}
+  .qko{font-size:clamp(15px,2.8vw,21px); color:var(--gray); font-weight:600; margin-bottom:26px;}
+  .opts{display:flex; flex-direction:column; gap:14px;}
+  .opt{font-family:inherit; text-align:left; cursor:pointer; background:var(--card);
+    border:2.5px solid var(--line); border-radius:16px; padding:clamp(15px,3vw,22px) clamp(18px,3.5vw,26px);
+    font-size:clamp(19px,3.8vw,30px); font-weight:700; color:var(--ink); transition:all .15s ease; display:flex; align-items:center; gap:14px;}
+  .opt:hover{border-color:#A9B2BE;}
+  .opt .mk{flex:0 0 auto; width:1.5em; height:1.5em; border-radius:50%; border:2.5px solid var(--line);
+    display:inline-flex; align-items:center; justify-content:center; font-size:.8em; color:#fff;}
+  .opt.correct{border-color:var(--green); background:var(--greenbg); color:#0f5f2c;}
+  .opt.correct .mk{background:var(--green); border-color:var(--green);}
+  .opt.wrong{border-color:var(--red); background:var(--redbg); color:#8e1414;}
+  .opt.wrong .mk{background:var(--red); border-color:var(--red);}
+  .opt[disabled]{cursor:default;}
+
+  .explain{margin-top:22px; background:var(--card); border:2.5px solid var(--green); border-left-width:.6em;
+    border-radius:14px; padding:clamp(16px,3vw,24px); animation:fade .25s ease;}
+  .explain .h{font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--green); margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .explain.bad{border-color:var(--red);} .explain.bad .h{color:var(--red);}
+  .explain .b{font-size:clamp(16px,3.1vw,23px); font-weight:600; line-height:1.5; color:var(--ink);}
+  .explain .b b{color:var(--gold);}
+  .next-btn{margin-top:20px; background:var(--navy); color:#fff; font-size:clamp(18px,3.6vw,24px); padding:15px 24px; width:100%;}
+  .next-btn:hover{background:#141d52}
+  .ok-flash{margin-top:20px; text-align:center; font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--green); height:1.4em;}
+
+  /* result */
+  #resultCard{background:var(--card); border:2.5px solid var(--line); border-radius:22px;
+    padding:clamp(24px,5vw,42px); text-align:center;}
+  .r-logo{font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--gray); margin-bottom:6px;}
+  .r-logo b{color:var(--green)}
+  .r-title{font-size:clamp(22px,4.6vw,34px); font-weight:800; color:var(--navy); margin-bottom:4px;}
+  .r-name{font-size:clamp(16px,3vw,22px); font-weight:700; color:var(--gray); margin-bottom:20px;}
+  .r-score{font-size:clamp(56px,14vw,104px); font-weight:800; line-height:1; color:var(--green); letter-spacing:-.02em;}
+  .r-score .tot{color:var(--gray); font-size:.42em; font-weight:800;}
+  .r-pct{font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--gold); margin-top:10px;}
+  .r-msg{font-size:clamp(16px,3.1vw,23px); font-weight:700; color:var(--ink); margin-top:14px; line-height:1.5;}
+  .r-date{font-size:clamp(12px,2.2vw,15px); color:var(--gray); font-weight:600; margin-top:18px;}
+  .r-actions{display:flex; flex-direction:column; gap:14px; margin-top:24px;}
+  .btn-kakao{background:#FAE100; color:#191600; font-size:clamp(18px,3.6vw,24px); padding:16px 24px;}
+  .btn-kakao:hover{background:#f2d800}
+  .btn-retry{background:var(--card); color:var(--navy); border:2.5px solid var(--navy); font-size:clamp(17px,3.4vw,23px); padding:15px 24px;}
+  .btn-retry:hover{background:#eef1f8}
+  .btn-review{background:none; color:var(--gray); border:2.5px solid var(--line); font-size:clamp(16px,3.2vw,21px); padding:13px 24px;}
+
+  .review{margin-top:24px; display:none;}
+  .review.show{display:block;}
+  .review h3{font-size:clamp(18px,3.4vw,24px); font-weight:800; color:var(--red); margin-bottom:14px;}
+  .rv-item{background:var(--card); border:2px solid var(--line); border-left:.5em solid var(--red); border-radius:12px;
+    padding:clamp(14px,2.8vw,20px); margin-bottom:12px;}
+  .rv-q{font-size:clamp(16px,3vw,22px); font-weight:700; line-height:1.45;}
+  .rv-q .a{color:var(--green); font-weight:800;}
+  .rv-e{font-size:clamp(14px,2.6vw,19px); color:var(--gray); font-weight:600; margin-top:7px; line-height:1.45;}
+  .rv-perfect{text-align:center; font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--green); padding:10px;}
+
+  .toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:#fff; font-size:clamp(14px,2.6vw,18px); font-weight:700;
+    padding:14px 22px; border-radius:12px; opacity:0; transition:all .3s ease; pointer-events:none; z-index:50; max-width:90%; text-align:center;}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .hidden{display:none !important;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo">영핏<b>영어</b> · 도치 퀴즈</div>
+    <div class="score-pill" id="scorePill">0점</div>
+  </div>
+  <div class="prog" id="progWrap"><i id="progBar"></i></div>
+  <div class="prog-label" id="progLabel"></div>
+
+  <!-- START -->
+  <div class="screen" id="screenStart">
+    <h1 class="start-title">도치구문 <span class="o">반복 퀴즈</span></h1>
+    <div class="start-sub">다양한 문장으로 도치 어순을 몸에 익혀요.<br>맞히면 0.2초 뒤 자동으로 다음 문제, 틀리면 바로 해설!</div>
+    <div class="name-row">
+      <label for="nameInput">이름 (결과 화면에 표시돼요)</label>
+      <input class="name" id="nameInput" type="text" placeholder="예: 김지나" maxlength="20" autocomplete="off">
+    </div>
+    <button class="btn btn-primary" id="startBtn">시작하기 ▶</button>
+    <div class="hintline">총 <span id="qCount">0</span>문제 · 매번 순서가 섞여서 반복 연습하기 좋아요.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="screen hidden" id="screenQuiz">
+    <span class="qtag" id="qtag"></span>
+    <div class="qprompt" id="qprompt"></div>
+    <div class="qko" id="qko"></div>
+    <div class="opts" id="opts"></div>
+    <div id="feedback"></div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="screen hidden" id="screenResult">
+    <div id="resultCard">
+      <div class="r-logo">영핏<b>영어</b> · 도치구문 퀴즈</div>
+      <div class="r-title">도치구문 퀴즈 결과</div>
+      <div class="r-name" id="rName"></div>
+      <div class="r-score"><span id="rScore">0</span><span class="tot" id="rTot">/0</span></div>
+      <div class="r-pct" id="rPct"></div>
+      <div class="r-msg" id="rMsg"></div>
+      <div class="r-date" id="rDate"></div>
+    </div>
+    <div class="r-actions">
+      <button class="btn btn-kakao" id="shareBtn">📩 카톡으로 결과 보내기</button>
+      <button class="btn btn-review" id="reviewBtn">틀린 문제 다시 보기</button>
+      <button class="btn btn-retry" id="retryBtn">🔄 다시 풀기 (문제 섞기)</button>
+    </div>
+    <div class="review" id="review"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+/* ===== 문제 은행 ===== prompt 안의 ___ 가 빈칸 */
+const BANK = [
+ {tag:'부정어 도치', q:"Rarely ___ coffee at night because it affects his sleep.",
+  ko:"그는 밤에 커피를 좀처럼 안 마셔. (잠에 영향을 줘서)",
+  opts:["does Tom drink","Tom drinks","does Tom drinks"], ans:0,
+  exp:"부정어 <b>Rarely</b>가 앞 → 「does + 주어 + 동사원형」. Tom(3인칭)이라 does, 동사는 원형 drink."},
+ {tag:'부정어 도치', q:"Little ___ that the exam would be cancelled.",
+  ko:"시험이 취소될 줄은 꿈에도 몰랐어.",
+  opts:["did I know","I knew","knew I"], ans:0,
+  exp:"<b>Little</b>(부정어)이 앞으로 나오면 「did + 주어 + 동사원형」 어순이 돼요."},
+ {tag:'부정어 도치', q:"Seldom ___ jewelry these days.",
+  ko:"우리 엄마는 요즘 액세서리를 거의 안 하셔.",
+  opts:["does my mom wear","my mom wears","wears my mom"], ans:0,
+  exp:"준부정어 <b>Seldom</b> 도치 → does + 주어 + 동사원형(wear)."},
+ {tag:'부정어 도치', q:"Hardly ___ any time to prepare for his trip.",
+  ko:"그는 여행 준비할 시간이 거의 없었어.",
+  opts:["did he have","he had","had he"], ans:0,
+  exp:"<b>Hardly</b>가 앞 → 일반동사 과거라 「did + 주어 + 동사원형」."},
+ {tag:'부정어 도치(완료)', q:"Never ___ that I would achieve such success.",
+  ko:"그런 성공을 이룰 줄은 꿈에도 몰랐어.",
+  opts:["had I dreamed","I had dreamed","did I dreamed"], ans:0,
+  exp:"이미 완료(had)가 있으면 그대로 앞으로! 「had + 주어 + p.p.」. do는 안 빌려요."},
+ {tag:'부정어 도치(수일치)', q:"Rarely ___ Jake and his coach talk about scoring a goal.",
+  ko:"제이크와 코치는 골 넣는 얘기를 거의 안 해.",
+  opts:["do","does","did"], ans:0,
+  exp:"주어 <b>Jake and his coach</b>(복수) → do. 현재 시제."},
+ {tag:'not only', q:"Not only ___ the game, but he also got MVP.",
+  ko:"걔는 경기를 이겼을 뿐 아니라 MVP까지 받았어.",
+  opts:["did he win","he won","won he"], ans:0,
+  exp:"<b>Not only</b>가 문두 → 「did + 주어 + 동사원형」 도치."},
+ {tag:'no sooner', q:"No sooner ___ down than my phone rang.",
+  ko:"내가 자리에 앉자마자 폰이 울렸어.",
+  opts:["had I sat","I had sat","did I sit"], ans:0,
+  exp:"<b>No sooner ~ than …</b> : ~하자마자. 앞은 과거완료 「had + 주어 + p.p.」."},
+ {tag:'not until', q:"Not until the bell rang ___ studying.",
+  ko:"종이 울리고 나서야 비로소 공부를 멈췄어.",
+  opts:["did I stop","I stopped","stopped I"], ans:0,
+  exp:"<b>Not until B</b>가 앞에 오면 주절이 도치 → did + 주어 + 동사원형."},
+ {tag:'장소 도치', q:"On my desk ___ a plate of cold tteokbokki.",
+  ko:"내 책상 위엔 식어버린 떡볶이가 놓여 있었어.",
+  opts:["was","were","did"], ans:0,
+  exp:"장소부사구 도치(do 안 씀). 진짜 주어 <b>a plate</b>(단수) → was."},
+ {tag:'장소 도치(수일치)', q:"Under my bed ___ two lost AirPods.",
+  ko:"침대 밑엔 잃어버린 에어팟 두 짝이 있었어.",
+  opts:["were","was","did"], ans:0,
+  exp:"진짜 주어 <b>two AirPods</b>(복수) → were."},
+ {tag:'장소 도치', q:"In the grass ___ an enormous frog.",
+  ko:"풀밭에 커다란 개구리가 앉아 있었어.",
+  opts:["sat","did sit","sit"], ans:0,
+  exp:"장소부사구 도치는 동사를 그대로 앞에! do/did 안 빌려요 → sat."},
+ {tag:'방향 도치', q:"Down ___ the rain right before practice.",
+  ko:"연습 직전에 비가 쏟아져 내렸어.",
+  opts:["came","did come","come"], ans:0,
+  exp:"방향부사 <b>Down</b> 도치 → 동사 그대로 came + 주어."},
+ {tag:'장소 도치(수일치)', q:"At the center of the city ___ plenty of cafes.",
+  ko:"도시 한복판엔 카페가 엄청 많아.",
+  opts:["are","is","does"], ans:0,
+  exp:"진짜 주어 <b>plenty of cafes</b>(복수) → are."},
+ {tag:'보어 도치', q:"So funny ___ the comments on that video.",
+  ko:"그 영상 댓글들이 진짜 웃겼어.",
+  opts:["were","was","did"], ans:0,
+  exp:"보어(So funny) 도치 → be동사가 주어 앞으로. 주어 the comments(복수) → were."},
+ {tag:'보어 도치', q:"___ are those who wait for the weekend.",
+  ko:"주말을 기다리는 사람은 행복하다.",
+  opts:["Happy","Happily","Happiness"], ans:0,
+  exp:"보어 자리엔 형용사! <b>Happy</b>(형용사)를 강조해 앞으로 → are + 주어."},
+ {tag:'There/Here', q:"Here ___ the bus!",
+  ko:"버스 온다!",
+  opts:["comes","does come","is coming bus"], ans:0,
+  exp:"Here 도치 → 동사 그대로 comes + 주어(명사 the bus)."},
+ {tag:'대명사 주의', q:"Here ___! (저기 온다!)",
+  ko:"온다 온다!",
+  opts:["it comes","comes it","does it come"], ans:0,
+  exp:"주어가 <b>대명사(it)</b>면 도치 안 해요 → Here it comes."},
+ {tag:'There 수일치', q:"There ___ 24 teams in the tournament.",
+  ko:"이번 토너먼트엔 24개 팀이 나와.",
+  opts:["are","is","has"], ans:0,
+  exp:"진짜 주어 <b>24 teams</b>(복수) → are."},
+ {tag:'so + V + S', q:'"I’m tired." — "___"',
+  ko:'"나 피곤해." "나도 그래."',
+  opts:["So am I","So I am","Also me"], ans:0,
+  exp:"긍정 동의 <b>so + V + S</b> → So am I."},
+ {tag:'neither + V + S', q:'"I don’t like it." — "___"',
+  ko:'"난 그거 별로야." "나도 안 그래."',
+  opts:["Neither do I","Neither I do","So do I"], ans:0,
+  exp:"부정 동의 <b>neither + V + S</b> → Neither do I."},
+ {tag:'so / such 어순', q:"It was ___ that I stayed home all day.",
+  ko:"너무 추운 밤이라 하루 종일 집에 있었어.",
+  opts:["such a cold night","so a cold night","a so cold night"], ans:0,
+  exp:"<b>such + a + 형용사 + 명사</b>. (so는 so + 형용사 + a + 명사: so cold a night)"},
+];
+
+/* ===== 상태 ===== */
+let order=[], idx=0, score=0, wrong=[], answered=false, studentName="";
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+$('qCount').textContent=BANK.length;
+
+function show(screen){
+  ['screenStart','screenQuiz','screenResult'].forEach(s=>$(s).classList.toggle('hidden', s!==screen));
+  const quiz = screen==='screenQuiz';
+  $('progWrap').style.display = quiz?'block':'none';
+  $('progLabel').style.display = quiz?'block':'none';
+  $('scorePill').style.visibility = (screen==='screenStart')?'hidden':'visible';
+}
+
+function start(){
+  studentName = ($('nameInput').value || '').trim() || '학생';
+  order = shuffle([...Array(BANK.length).keys()]);
+  idx=0; score=0; wrong=[];
+  $('scorePill').textContent='0점';
+  show('screenQuiz');
+  render();
+}
+
+function render(){
+  answered=false;
+  const q=BANK[order[idx]];
+  $('qtag').textContent=q.tag;
+  $('qprompt').innerHTML=q.q.replace('___','<span class="slot" id="slot">?</span>');
+  $('qko').textContent=q.ko;
+  $('feedback').innerHTML='';
+  // 보기 섞기 (정답 텍스트 추적)
+  const correctText=q.opts[q.ans];
+  const opts=shuffle(q.opts);
+  const box=$('opts'); box.innerHTML='';
+  opts.forEach(t=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML='<span class="mk">'+'</span><span>'+t+'</span>';
+    b.onclick=()=>choose(b, t, correctText);
+    box.appendChild(b);
+  });
+  const pct=Math.round(idx/BANK.length*100);
+  $('progBar').style.width=pct+'%';
+  $('progLabel').textContent=(idx+1)+' / '+BANK.length+' 문제';
+}
+
+function choose(btn, text, correctText){
+  if(answered) return; answered=true;
+  const buttons=[...document.querySelectorAll('.opt')];
+  buttons.forEach(b=>b.setAttribute('disabled',''));
+  const slot=$('slot');
+  if(text===correctText){
+    btn.classList.add('correct');
+    btn.querySelector('.mk').textContent='✓';
+    score++; $('scorePill').textContent=score+'점';
+    if(slot){ slot.textContent=text; slot.className='slot ok'; }
+    $('feedback').innerHTML='<div class="ok-flash">정답! 👍</div>';
+    setTimeout(next, 200);   // 맞으면 0.2초 후 자동 진행
+  }else{
+    btn.classList.add('wrong');
+    btn.querySelector('.mk').textContent='✕';
+    // 정답 버튼 강조
+    buttons.forEach(b=>{ if(b.querySelector('span:last-child').textContent===correctText){ b.classList.add('correct'); b.querySelector('.mk').textContent='✓'; }});
+    if(slot){ slot.textContent=text; slot.className='slot no'; }
+    const q=BANK[order[idx]];
+    wrong.push({q:q.q, ko:q.ko, correct:correctText, exp:q.exp});
+    $('feedback').innerHTML=
+      '<div class="explain bad"><div class="h">💡 해설 · 정답은 '+correctText+'</div>'+
+      '<div class="b">'+q.exp+'</div></div>'+
+      '<button class="btn next-btn" id="nextBtn">다음 문제 ▶</button>';
+    $('nextBtn').onclick=next;
+  }
+}
+
+function next(){
+  idx++;
+  if(idx>=order.length) result();
+  else render();
+}
+
+function result(){
+  const tot=BANK.length, pct=Math.round(score/tot*100);
+  $('rName').textContent=studentName;
+  $('rScore').textContent=score;
+  $('rTot').textContent='/'+tot;
+  $('rPct').textContent='정답률 '+pct+'%';
+  let msg;
+  if(pct===100) msg='완벽해요! 도치 마스터 🏆';
+  else if(pct>=80) msg='훌륭해요! 거의 다 잡았어요 ✨';
+  else if(pct>=60) msg='좋아요! 틀린 것만 다시 보면 완성 💪';
+  else msg='괜찮아요, 해설 보고 한 번 더! 🔁';
+  $('rMsg').textContent=msg;
+  const d=new Date();
+  $('rDate').textContent=d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate()+'  도치구문 퀴즈';
+  $('progBar').style.width='100%';
+  // 리뷰
+  const rv=$('review'); rv.classList.remove('show'); rv.innerHTML='';
+  $('reviewBtn').textContent='틀린 문제 다시 보기'+(wrong.length?' ('+wrong.length+')':'');
+  show('screenResult');
+}
+
+function buildReview(){
+  const rv=$('review');
+  if(wrong.length===0){ rv.innerHTML='<div class="rv-perfect">틀린 문제가 없어요! 🎉</div>'; return; }
+  rv.innerHTML='<h3>틀린 문제 해설 ('+wrong.length+')</h3>'+wrong.map(w=>
+    '<div class="rv-item"><div class="rv-q">'+w.q.replace('___','<span class="a">'+w.correct+'</span>')+
+    '<br><span style="color:var(--gray);font-weight:600;font-size:.85em">'+w.ko+'</span></div>'+
+    '<div class="rv-e">'+w.exp+'</div></div>').join('');
+}
+
+/* ===== 카톡 공유 (결과 이미지) ===== */
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
+
+async function shareResult(){
+  const card=$('resultCard');
+  let canvas;
+  try{ canvas=await html2canvas(card,{backgroundColor:'#ffffff',scale:2}); }
+  catch(e){ toast('이미지 생성에 실패했어요. 화면을 캡처해서 보내주세요.'); return; }
+  const text=studentName+' 도치구문 퀴즈 결과: '+score+'/'+BANK.length+' ('+Math.round(score/BANK.length*100)+'%)';
+  canvas.toBlob(async(blob)=>{
+    const file=new File([blob],'inversion-quiz-result.png',{type:'image/png'});
+    // 1) 이미지 파일 공유 (카톡에 사진으로)
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      try{ await navigator.share({files:[file], title:'도치구문 퀴즈 결과', text}); return; }
+      catch(e){ if(e.name==='AbortError') return; }
+    }
+    // 2) 텍스트+링크 공유
+    if(navigator.share){
+      try{ await navigator.share({title:'도치구문 퀴즈 결과', text, url:location.href}); return; }
+      catch(e){ if(e.name==='AbortError') return; }
+    }
+    // 3) 이미지 저장 후 안내
+    const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='inversion-quiz-result.png'; a.click();
+    toast('결과 이미지를 저장했어요. 카톡으로 보내주세요!');
+  },'image/png');
+}
+
+/* ===== 이벤트 ===== */
+$('startBtn').onclick=start;
+$('nameInput').addEventListener('keydown',e=>{ if(e.key==='Enter') start(); });
+$('shareBtn').onclick=shareResult;
+$('retryBtn').onclick=start;
+$('reviewBtn').onclick=()=>{ const rv=$('review'); if(!rv.classList.contains('show')){ buildReview(); rv.classList.add('show'); rv.scrollIntoView({behavior:'smooth'}); } else { rv.classList.remove('show'); } };
+
+show('screenStart');
+</script>
+</body>
+</html>
