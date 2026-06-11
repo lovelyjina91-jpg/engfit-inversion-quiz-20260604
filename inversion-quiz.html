@@ -96,6 +96,8 @@
   .r-actions{display:flex; flex-direction:column; gap:14px; margin-top:24px;}
   .btn-kakao{background:#FAE100; color:#191600; font-size:clamp(18px,3.6vw,24px); padding:16px 24px;}
   .btn-kakao:hover{background:#f2d800}
+  .btn-copy{background:var(--green); color:#fff; font-size:clamp(18px,3.6vw,24px); padding:16px 24px;}
+  .btn-copy:hover{background:#11652f}
   .btn-retry{background:var(--card); color:var(--navy); border:2.5px solid var(--navy); font-size:clamp(17px,3.4vw,23px); padding:15px 24px;}
   .btn-retry:hover{background:#eef1f8}
   .btn-review{background:none; color:var(--gray); border:2.5px solid var(--line); font-size:clamp(16px,3.2vw,21px); padding:13px 24px;}
@@ -158,7 +160,7 @@
       <div class="r-date" id="rDate"></div>
     </div>
     <div class="r-actions">
-      <button class="btn btn-kakao" id="shareBtn">📩 카톡으로 결과 보내기</button>
+      <button class="btn btn-copy" id="shareBtn">📋 결과 + 오답 해설 복사</button>
       <button class="btn btn-review" id="reviewBtn">틀린 문제 다시 보기</button>
       <button class="btn btn-retry" id="retryBtn">🔄 다시 풀기 (문제 섞기)</button>
     </div>
@@ -167,7 +169,6 @@
 </div>
 <div class="toast" id="toast"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 /* ===== 문제 은행 (도치 기본문제 1~70, 정답지 기준) =====
    q 안의 ___ 가 빈칸. ans = opts 배열에서 정답 인덱스. */
@@ -494,44 +495,33 @@ function buildReview(){
 
 /* ===== 카톡 공유 (결과 이미지) ===== */
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
-async function shareResult(){
-  const card=$('resultCard');
-  const pct=Math.round(score/BANK.length*100);
-  const text=studentName+' 도치구문 퀴즈 결과: '+score+'/'+BANK.length+' ('+pct+'%)';
-  let canvas;
-  try{ canvas=await html2canvas(card,{backgroundColor:'#ffffff',scale:2}); }
-  catch(e){ copyText(text); return; }
-  canvas.toBlob(async(blob)=>{
-    if(!blob){ copyText(text); return; }
-    const file=new File([blob],'inversion-quiz-result.png',{type:'image/png'});
-    // 1) 모바일 등: 파일 공유 시트(→ 카카오톡 선택)
-    if(navigator.canShare && navigator.canShare({files:[file]})){
-      try{ await navigator.share({files:[file], title:'도치구문 퀴즈 결과', text}); return; }
-      catch(e){ if(e.name==='AbortError') return; }
-    }
-    // 2) PC: 결과 이미지를 클립보드에 복사 → 카톡 대화창에 Ctrl+V
-    try{
-      if(navigator.clipboard && window.ClipboardItem){
-        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-        toast('✅ 결과 이미지를 복사했어요! 카톡 대화창에 붙여넣기(Ctrl+V) 하세요.');
-        return;
-      }
-    }catch(e){}
-    // 3) 텍스트 공유 시트
-    if(navigator.share){
-      try{ await navigator.share({title:'도치구문 퀴즈 결과', text, url:location.href}); return; }
-      catch(e){ if(e.name==='AbortError') return; }
-    }
-    // 4) 최후: 이미지 다운로드
-    try{
-      const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='inversion-quiz-result.png'; a.click();
-      toast('결과 이미지를 저장했어요. 카톡으로 보내주세요!');
-    }catch(e){ copyText(text); }
-  },'image/png');
+function stripTags(h){ return String(h).replace(/<[^>]+>/g,''); }
+async function copyToClipboard(txt){
+  try{ await navigator.clipboard.writeText(txt); return true; }catch(e){}
+  try{ const ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.left='-9999px';
+    document.body.appendChild(ta); ta.focus(); ta.select(); const ok=document.execCommand('copy'); document.body.removeChild(ta); return ok; }catch(e){ return false; }
 }
-async function copyText(text){
-  try{ await navigator.clipboard.writeText(text); toast('✅ 결과를 텍스트로 복사했어요! 카톡에 붙여넣기 하세요.'); }
-  catch(e){ toast('복사가 안 돼요. 화면을 캡처해서 보내주세요.'); }
+async function shareResult(){
+  const tot=BANK.length, pct=Math.round(score/tot*100);
+  const d=new Date();
+  let txt='[영핏영어 · 도치구문 퀴즈]\n';
+  txt+='이름: '+studentName+'\n';
+  txt+='점수: '+score+'/'+tot+' ('+pct+'%)\n';
+  txt+='날짜: '+d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate()+'\n';
+  if(wrong.length===0){
+    txt+='\n틀린 문제 없음 — 완벽해요!';
+  }else{
+    txt+='\n[틀린 문제 '+wrong.length+'개]\n';
+    wrong.forEach((w,i)=>{
+      const stem = w.q.includes('___') ? w.q.replace('___','('+w.correct+')') : (stripTags(w.q)+' → '+w.correct);
+      txt+='\n'+(i+1)+'. '+stripTags(stem)+'\n';
+      if(w.ko) txt+='   ('+stripTags(w.ko)+')\n';
+      txt+='   정답: '+w.correct+'\n';
+      txt+='   해설: '+stripTags(w.exp)+'\n';
+    });
+  }
+  const ok=await copyToClipboard(txt);
+  toast(ok ? '✅ 결과 + 오답 해설을 복사했어요! 붙여넣기(Ctrl+V) 하세요.' : '복사가 안 돼요. 화면을 길게 눌러 직접 복사해 주세요.');
 }
 
 /* ===== 이벤트 ===== */
