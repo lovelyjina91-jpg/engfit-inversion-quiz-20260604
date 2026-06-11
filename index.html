@@ -17,8 +17,7 @@
   body{
     background:var(--bg); color:var(--ink);
     font-family:'Pretendard',system-ui,sans-serif;
-    -webkit-font-smoothing:antialiased; line-height:1.4;
-    min-height:100%;
+    -webkit-font-smoothing:antialiased; line-height:1.4; min-height:100%;
   }
   .wrap{max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column;
     padding:clamp(16px,3.5vw,32px);}
@@ -27,7 +26,6 @@
   .logo b{color:var(--green)}
   .score-pill{font-size:clamp(15px,2.6vw,20px); font-weight:800; color:var(--navy);
     background:var(--bluebg); padding:6px 16px; border-radius:999px;}
-  /* progress */
   .prog{height:10px; background:#E4E8EE; border-radius:999px; overflow:hidden; margin-bottom:6px;}
   .prog > i{display:block; height:100%; width:0; background:var(--green); border-radius:999px; transition:width .3s ease;}
   .prog-label{font-size:clamp(13px,2.3vw,16px); color:var(--gray); font-weight:700; margin-bottom:22px;}
@@ -35,11 +33,9 @@
   .screen{flex:1; display:flex; flex-direction:column; justify-content:center; animation:fade .35s ease;}
   @keyframes fade{from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none}}
 
-  /* start */
   .start-title{font-size:clamp(30px,7vw,58px); font-weight:800; letter-spacing:-.03em; line-height:1.1;}
   .start-title .o{color:var(--gold)}
-  .start-sub{font-size:clamp(16px,3.4vw,24px); color:var(--gray); font-weight:600; margin-top:16px; line-height:1.5;}
-  .name-row{margin-top:34px;}
+  .name-row{margin-top:38px;}
   .name-row label{display:block; font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--navy); margin-bottom:10px;}
   input.name{width:100%; font-family:inherit; font-size:clamp(18px,3.8vw,26px); font-weight:700; color:var(--ink);
     background:var(--card); border:2.5px solid var(--line); border-radius:14px; padding:14px 18px; outline:none;}
@@ -49,21 +45,19 @@
   .btn:active{transform:scale(.98)}
   .btn-primary{background:var(--green); color:#fff; font-size:clamp(19px,3.8vw,26px); padding:16px 26px; width:100%; margin-top:26px;}
   .btn-primary:hover{background:#11652f}
-  .hintline{font-size:clamp(13px,2.4vw,16px); color:var(--gray); margin-top:18px; line-height:1.5;}
 
-  /* question */
   .qtag{display:inline-block; font-size:clamp(13px,2.4vw,17px); font-weight:800; letter-spacing:.04em;
     color:var(--gold); background:var(--goldbg); padding:5px 14px; border-radius:999px; margin-bottom:18px; align-self:flex-start;}
-  .qprompt{font-size:clamp(22px,4.6vw,40px); font-weight:800; line-height:1.4; letter-spacing:-.01em; margin-bottom:8px;}
-  .qprompt .slot{display:inline-block; min-width:2.4em; text-align:center; color:var(--gold);
-    border-bottom:.18em solid var(--gold); margin:0 .12em;}
+  .qprompt{font-size:clamp(21px,4.3vw,38px); font-weight:800; line-height:1.45; letter-spacing:-.01em; margin-bottom:8px;}
+  .qprompt .slot{display:inline-block; min-width:2.2em; text-align:center; color:var(--gold);
+    border-bottom:.16em solid var(--gold); margin:0 .1em;}
   .qprompt .slot.ok{color:var(--green); border-bottom-color:transparent;}
   .qprompt .slot.no{color:var(--red); border-bottom-color:transparent;}
-  .qko{font-size:clamp(15px,2.8vw,21px); color:var(--gray); font-weight:600; margin-bottom:26px;}
-  .opts{display:flex; flex-direction:column; gap:14px;}
+  .qko{font-size:clamp(15px,2.8vw,21px); color:var(--gray); font-weight:600; margin-bottom:24px;}
+  .opts{display:flex; flex-direction:column; gap:13px;}
   .opt{font-family:inherit; text-align:left; cursor:pointer; background:var(--card);
-    border:2.5px solid var(--line); border-radius:16px; padding:clamp(15px,3vw,22px) clamp(18px,3.5vw,26px);
-    font-size:clamp(19px,3.8vw,30px); font-weight:700; color:var(--ink); transition:all .15s ease; display:flex; align-items:center; gap:14px;}
+    border:2.5px solid var(--line); border-radius:16px; padding:clamp(14px,2.6vw,20px) clamp(16px,3vw,24px);
+    font-size:clamp(17px,3.3vw,27px); font-weight:700; color:var(--ink); transition:all .15s ease; display:flex; align-items:center; gap:14px; line-height:1.35;}
   .opt:hover{border-color:#A9B2BE;}
   .opt .mk{flex:0 0 auto; width:1.5em; height:1.5em; border-radius:50%; border:2.5px solid var(--line);
     display:inline-flex; align-items:center; justify-content:center; font-size:.8em; color:#fff;}
@@ -73,24 +67,23 @@
   .opt.wrong .mk{background:var(--red); border-color:var(--red);}
   .opt[disabled]{cursor:default;}
 
-  .explain{margin-top:22px; background:var(--card); border:2.5px solid var(--green); border-left-width:.6em;
-    border-radius:14px; padding:clamp(16px,3vw,24px); animation:fade .25s ease;}
-  .explain .h{font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--green); margin-bottom:8px; display:flex; align-items:center; gap:8px;}
+  .explain{margin-top:20px; background:var(--card); border:2.5px solid var(--green); border-left-width:.6em;
+    border-radius:14px; padding:clamp(15px,2.8vw,22px); animation:fade .25s ease;}
+  .explain .h{font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--green); margin-bottom:8px;}
   .explain.bad{border-color:var(--red);} .explain.bad .h{color:var(--red);}
-  .explain .b{font-size:clamp(16px,3.1vw,23px); font-weight:600; line-height:1.5; color:var(--ink);}
+  .explain .b{font-size:clamp(15px,2.9vw,22px); font-weight:600; line-height:1.5; color:var(--ink);}
   .explain .b b{color:var(--gold);}
-  .next-btn{margin-top:20px; background:var(--navy); color:#fff; font-size:clamp(18px,3.6vw,24px); padding:15px 24px; width:100%;}
+  .next-btn{margin-top:18px; background:var(--navy); color:#fff; font-size:clamp(18px,3.6vw,24px); padding:15px 24px; width:100%;}
   .next-btn:hover{background:#141d52}
-  .ok-flash{margin-top:20px; text-align:center; font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--green); height:1.4em;}
+  .ok-flash{margin-top:18px; text-align:center; font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--green); height:1.4em;}
 
-  /* result */
   #resultCard{background:var(--card); border:2.5px solid var(--line); border-radius:22px;
     padding:clamp(24px,5vw,42px); text-align:center;}
   .r-logo{font-size:clamp(15px,2.8vw,20px); font-weight:800; color:var(--gray); margin-bottom:6px;}
   .r-logo b{color:var(--green)}
   .r-title{font-size:clamp(22px,4.6vw,34px); font-weight:800; color:var(--navy); margin-bottom:4px;}
   .r-name{font-size:clamp(16px,3vw,22px); font-weight:700; color:var(--gray); margin-bottom:20px;}
-  .r-score{font-size:clamp(56px,14vw,104px); font-weight:800; line-height:1; color:var(--green); letter-spacing:-.02em;}
+  .r-score{font-size:clamp(52px,13vw,96px); font-weight:800; line-height:1; color:var(--green); letter-spacing:-.02em;}
   .r-score .tot{color:var(--gray); font-size:.42em; font-weight:800;}
   .r-pct{font-size:clamp(18px,3.6vw,26px); font-weight:800; color:var(--gold); margin-top:10px;}
   .r-msg{font-size:clamp(16px,3.1vw,23px); font-weight:700; color:var(--ink); margin-top:14px; line-height:1.5;}
@@ -131,13 +124,11 @@
   <!-- START -->
   <div class="screen" id="screenStart">
     <h1 class="start-title">도치구문 <span class="o">반복 퀴즈</span></h1>
-    <div class="start-sub">다양한 문장으로 도치 어순을 몸에 익혀요.<br>맞히면 0.2초 뒤 자동으로 다음 문제, 틀리면 바로 해설!</div>
     <div class="name-row">
       <label for="nameInput">이름 (결과 화면에 표시돼요)</label>
       <input class="name" id="nameInput" type="text" placeholder="예: 김지나" maxlength="20" autocomplete="off">
     </div>
     <button class="btn btn-primary" id="startBtn">시작하기 ▶</button>
-    <div class="hintline">총 <span id="qCount">0</span>문제 · 매번 순서가 섞여서 반복 연습하기 좋아요.</div>
   </div>
 
   <!-- QUIZ -->
@@ -172,104 +163,225 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
-/* ===== 문제 은행 ===== prompt 안의 ___ 가 빈칸 */
+/* ===== 문제 은행 (도치 기본문제 1~70, 정답지 기준) =====
+   q 안의 ___ 가 빈칸. ans = opts 배열에서 정답 인덱스. */
 const BANK = [
- {tag:'부정어 도치', q:"Rarely ___ coffee at night because it affects his sleep.",
-  ko:"그는 밤에 커피를 좀처럼 안 마셔. (잠에 영향을 줘서)",
-  opts:["does Tom drink","Tom drinks","does Tom drinks"], ans:0,
-  exp:"부정어 <b>Rarely</b>가 앞 → 「does + 주어 + 동사원형」. Tom(3인칭)이라 does, 동사는 원형 drink."},
- {tag:'부정어 도치', q:"Little ___ that the exam would be cancelled.",
-  ko:"시험이 취소될 줄은 꿈에도 몰랐어.",
-  opts:["did I know","I knew","knew I"], ans:0,
-  exp:"<b>Little</b>(부정어)이 앞으로 나오면 「did + 주어 + 동사원형」 어순이 돼요."},
- {tag:'부정어 도치', q:"Seldom ___ jewelry these days.",
-  ko:"우리 엄마는 요즘 액세서리를 거의 안 하셔.",
-  opts:["does my mom wear","my mom wears","wears my mom"], ans:0,
-  exp:"준부정어 <b>Seldom</b> 도치 → does + 주어 + 동사원형(wear)."},
- {tag:'부정어 도치', q:"Hardly ___ any time to prepare for his trip.",
-  ko:"그는 여행 준비할 시간이 거의 없었어.",
-  opts:["did he have","he had","had he"], ans:0,
-  exp:"<b>Hardly</b>가 앞 → 일반동사 과거라 「did + 주어 + 동사원형」."},
- {tag:'부정어 도치(완료)', q:"Never ___ that I would achieve such success.",
-  ko:"그런 성공을 이룰 줄은 꿈에도 몰랐어.",
-  opts:["had I dreamed","I had dreamed","did I dreamed"], ans:0,
-  exp:"이미 완료(had)가 있으면 그대로 앞으로! 「had + 주어 + p.p.」. do는 안 빌려요."},
- {tag:'부정어 도치(수일치)', q:"Rarely ___ Jake and his coach talk about scoring a goal.",
-  ko:"제이크와 코치는 골 넣는 얘기를 거의 안 해.",
-  opts:["do","does","did"], ans:0,
-  exp:"주어 <b>Jake and his coach</b>(복수) → do. 현재 시제."},
- {tag:'not only', q:"Not only ___ the game, but he also got MVP.",
-  ko:"걔는 경기를 이겼을 뿐 아니라 MVP까지 받았어.",
-  opts:["did he win","he won","won he"], ans:0,
-  exp:"<b>Not only</b>가 문두 → 「did + 주어 + 동사원형」 도치."},
- {tag:'no sooner', q:"No sooner ___ down than my phone rang.",
-  ko:"내가 자리에 앉자마자 폰이 울렸어.",
-  opts:["had I sat","I had sat","did I sit"], ans:0,
-  exp:"<b>No sooner ~ than …</b> : ~하자마자. 앞은 과거완료 「had + 주어 + p.p.」."},
- {tag:'not until', q:"Not until the bell rang ___ studying.",
-  ko:"종이 울리고 나서야 비로소 공부를 멈췄어.",
-  opts:["did I stop","I stopped","stopped I"], ans:0,
-  exp:"<b>Not until B</b>가 앞에 오면 주절이 도치 → did + 주어 + 동사원형."},
- {tag:'장소 도치', q:"On my desk ___ a plate of cold tteokbokki.",
-  ko:"내 책상 위엔 식어버린 떡볶이가 놓여 있었어.",
-  opts:["was","were","did"], ans:0,
-  exp:"장소부사구 도치(do 안 씀). 진짜 주어 <b>a plate</b>(단수) → was."},
- {tag:'장소 도치(수일치)', q:"Under my bed ___ two lost AirPods.",
-  ko:"침대 밑엔 잃어버린 에어팟 두 짝이 있었어.",
-  opts:["were","was","did"], ans:0,
-  exp:"진짜 주어 <b>two AirPods</b>(복수) → were."},
- {tag:'장소 도치', q:"In the grass ___ an enormous frog.",
-  ko:"풀밭에 커다란 개구리가 앉아 있었어.",
-  opts:["sat","did sit","sit"], ans:0,
-  exp:"장소부사구 도치는 동사를 그대로 앞에! do/did 안 빌려요 → sat."},
- {tag:'방향 도치', q:"Down ___ the rain right before practice.",
-  ko:"연습 직전에 비가 쏟아져 내렸어.",
-  opts:["came","did come","come"], ans:0,
-  exp:"방향부사 <b>Down</b> 도치 → 동사 그대로 came + 주어."},
- {tag:'장소 도치(수일치)', q:"At the center of the city ___ plenty of cafes.",
-  ko:"도시 한복판엔 카페가 엄청 많아.",
-  opts:["are","is","does"], ans:0,
-  exp:"진짜 주어 <b>plenty of cafes</b>(복수) → are."},
- {tag:'보어 도치', q:"So funny ___ the comments on that video.",
-  ko:"그 영상 댓글들이 진짜 웃겼어.",
-  opts:["were","was","did"], ans:0,
-  exp:"보어(So funny) 도치 → be동사가 주어 앞으로. 주어 the comments(복수) → were."},
- {tag:'보어 도치', q:"___ are those who wait for the weekend.",
-  ko:"주말을 기다리는 사람은 행복하다.",
-  opts:["Happy","Happily","Happiness"], ans:0,
-  exp:"보어 자리엔 형용사! <b>Happy</b>(형용사)를 강조해 앞으로 → are + 주어."},
- {tag:'There/Here', q:"Here ___ the bus!",
-  ko:"버스 온다!",
-  opts:["comes","does come","is coming bus"], ans:0,
-  exp:"Here 도치 → 동사 그대로 comes + 주어(명사 the bus)."},
- {tag:'대명사 주의', q:"Here ___! (저기 온다!)",
-  ko:"온다 온다!",
-  opts:["it comes","comes it","does it come"], ans:0,
-  exp:"주어가 <b>대명사(it)</b>면 도치 안 해요 → Here it comes."},
- {tag:'There 수일치', q:"There ___ 24 teams in the tournament.",
-  ko:"이번 토너먼트엔 24개 팀이 나와.",
-  opts:["are","is","has"], ans:0,
-  exp:"진짜 주어 <b>24 teams</b>(복수) → are."},
- {tag:'so + V + S', q:'"I’m tired." — "___"',
-  ko:'"나 피곤해." "나도 그래."',
-  opts:["So am I","So I am","Also me"], ans:0,
-  exp:"긍정 동의 <b>so + V + S</b> → So am I."},
- {tag:'neither + V + S', q:'"I don’t like it." — "___"',
-  ko:'"난 그거 별로야." "나도 안 그래."',
-  opts:["Neither do I","Neither I do","So do I"], ans:0,
-  exp:"부정 동의 <b>neither + V + S</b> → Neither do I."},
- {tag:'so / such 어순', q:"It was ___ that I stayed home all day.",
-  ko:"너무 추운 밤이라 하루 종일 집에 있었어.",
-  opts:["such a cold night","so a cold night","a so cold night"], ans:0,
-  exp:"<b>such + a + 형용사 + 명사</b>. (so는 so + 형용사 + a + 명사: so cold a night)"},
+ {t:'장소 도치', q:"Under the big tree ___.", ko:"큰 나무 아래에 두 소녀가 서 있었다.",
+  o:["stood two girls","two girls stood"], a:0,
+  e:"장소부사구가 앞 → 동사 그대로 주어 앞으로(do 안 씀). <b>stood</b> + 주어."},
+ {t:'장소 도치', q:"On the table ___ I've been looking for.", ko:"내가 찾던 그 책이 탁자 위에 있다.",
+  o:["is the book","the book is"], a:0,
+  e:"장소부사구 도치 → 동사 <b>is</b> + 주어(the book)."},
+ {t:'부정어 도치', q:"Never ___ chocolate before bedtime.", ko:"나는 자기 전엔 절대 초콜릿을 안 먹어.",
+  o:["do I eat","I do eat"], a:0,
+  e:"부정어 <b>Never</b> 앞 → 「do + 주어 + 동사원형」."},
+ {t:'부정어 도치', q:"Little ___ that the team would win.", ko:"그 팀이 이길 줄은 거의 생각 못 했어.",
+  o:["did we think","we did think"], a:0,
+  e:"<b>Little</b>(부정어) 도치 → did + 주어 + 동사원형."},
+ {t:'부정어 도치', q:"Hardly ___ keep my eyes open.", ko:"나는 눈을 거의 못 뜨겠어.",
+  o:["can I","I can"], a:0,
+  e:"부정어 <b>Hardly</b> + 조동사 → 「can + 주어」."},
+ {t:'방향 도치', q:"Around the corner ___.", ko:"모퉁이를 돌아 차 한 대가 왔다.",
+  o:["came a car","a car came","did come a car"], a:0,
+  e:"방향/장소부사구 도치 → 동사 그대로 <b>came</b> + 주어(a car). do 안 씀."},
+ {t:'장소 도치', q:"On the stage ___.", ko:"무대 위에서 그 소년이 노래했다.",
+  o:["sang the boy","the boy sang","did sing the boy"], a:0,
+  e:"장소부사구 도치 → 동사 <b>sang</b> + 주어."},
+ {t:'부정어 도치', q:"Never ___ for school.", ko:"그녀는 학교에 결코 지각하지 않았다.",
+  o:["was she late","she was late","did she late"], a:0,
+  e:"부정어 Never 도치 → be동사 <b>was</b> + 주어."},
+ {t:'부정어 도치', q:"Hardly ___ him.", ko:"나는 그를 거의 믿지 않는다.",
+  o:["do I trust","I trust","do I trusted"], a:0,
+  e:"Hardly 도치 → 「do + 주어 + 동사원형(trust)」."},
+ {t:'부정어 도치', q:"Rarely ___ breakfast.", ko:"그는 아침을 거의 안 먹는다.",
+  o:["does he eat","he eats","does he eats"], a:0,
+  e:"3인칭 단수라 <b>does</b> + 동사원형(eat)."},
+ {t:'so 동의', q:'"I\'m very interested in ball sports." — "So ___."', ko:'"나 구기 종목에 관심 많아." "나도 그래."',
+  o:["am I","do I","I am"], a:0,
+  e:"be동사 문장에 동의 → 「so + be동사 + 주어」 = So am I."},
+ {t:'so 동의', q:'"I want to drink some water." — "So ___."', ko:'"나 물 좀 마시고 싶어." "나도 그래."',
+  o:["do I","am I","I do"], a:0,
+  e:"일반동사 문장에 동의 → 「so + do + 주어」 = So do I."},
+ {t:'neither 동의', q:'"I won\'t see the movie." — "Neither ___."', ko:'"난 그 영화 안 볼래." "나도 안 봐."',
+  o:["will I","do I","am I"], a:0,
+  e:"won't(will)에 부정 동의 → 「neither + will + 주어」."},
+ {t:'so 동의', q:'"Tom enjoys skating and skiing." — "So ___."', ko:'"톰은 스케이트랑 스키를 즐겨." "걔도 그래."',
+  o:["does he","is he","do he"], a:0,
+  e:"일반동사 현재 3인칭 → 「so + does + he」."},
+ {t:'neither 동의', q:'"I didn\'t have lunch." — "Neither ___."', ko:'"나 점심 안 먹었어." "나도 안 먹었어."',
+  o:["did I","do I","was I"], a:0,
+  e:"didn't(과거)에 동의 → 「neither + did + 주어」."},
+ {t:'어순 배열', q:"밑줄(꽃 위에)을 강조해 바르게 배열한 것은?", ko:"꽃 위에 나비 한 마리가 앉았다.",
+  o:["On a flower sat a butterfly.","On a flower a butterfly sat.","A butterfly sat on a flower."], a:0,
+  e:"장소부사구(On a flower) 도치 → 동사 <b>sat</b> + 주어."},
+ {t:'어순 배열', q:"밑줄(결코)을 강조해 바르게 배열한 것은?", ko:"내가 1등을 할 것이라고는 결코 꿈꾼 적이 없다.",
+  o:["Never did I dream of winning first place.","Never I did dream of winning first place.","Never did dream I of winning first place."], a:0,
+  e:"부정어 Never 도치 → 「did + 주어 + 동사원형」."},
+ {t:'어순 배열', q:"밑줄(거의)을 강조해 바르게 배열한 것은?", ko:"이런 폭우를 거의 본 적이 없다.",
+  o:["Hardly have I seen such heavy rain.","Hardly I have seen such heavy rain.","Hardly have seen I such heavy rain."], a:0,
+  e:"부정어 Hardly + 완료 → 「have + 주어 + p.p.」."},
+ {t:'어순 배열', q:"밑줄(언덕 아래로)을 강조해 바르게 배열한 것은?", ko:"그 언덕 아래로 큰 눈덩이가 굴러 내려갔다.",
+  o:["Down the hill rolled a big snowball.","Down the hill a big snowball rolled.","Down the hill did roll a big snowball."], a:0,
+  e:"방향부사구 도치 → 동사 <b>rolled</b> + 주어."},
+ {t:'어순 배열', q:"밑줄(거의)을 강조해 바르게 배열한 것은?", ko:"그녀가 밤에 나에게 전화하는 일은 거의 없다.",
+  o:["Rarely does she call me at night.","Rarely she does call me at night.","Rarely does she calls me at night."], a:0,
+  e:"Rarely 도치 → 「does + 주어 + 동사원형(call)」."},
+ {t:'장소 도치', q:"Behind the door ___.", ko:"문 뒤에 그 아이가 숨었다.",
+  o:["hid the kid","the kid hid"], a:0,
+  e:"장소부사구 도치 → 동사 <b>hid</b> + 주어."},
+ {t:'장소 도치', q:"Under the table ___.", ko:"식탁 밑에 내 고양이가 누워 있었다.",
+  o:["lay my cat","my cat lay"], a:0,
+  e:"장소부사구 도치 → 동사 <b>lay</b> + 주어."},
+ {t:'부정어 도치', q:"Never ___ seen a child with so much talent.", ko:"그렇게 재능 많은 아이는 본 적이 없다.",
+  o:["have I","I have"], a:0,
+  e:"부정어 + 완료 → 「have + 주어 + p.p.」."},
+ {t:'부정어 도치', q:"Rarely ___ this year.", ko:"올해는 눈이 거의 안 왔다.",
+  o:["did it snow","it snowed"], a:0,
+  e:"Rarely 도치 → 「did + 주어 + 동사원형」."},
+ {t:'부정어 도치', q:"Hardly ___ in front of people.", ko:"그는 사람들 앞에서 거의 말을 안 한다.",
+  o:["does he talk","he talks"], a:0,
+  e:"Hardly 도치 → 「does + 주어 + 동사원형(talk)」."},
+ {t:'장소 도치', q:"In the basket ___.", ko:"바구니 안에 작은 강아지들이 있었다.",
+  o:["were little puppies","little puppies were","was little puppies"], a:0,
+  e:"장소부사구 도치, 주어가 복수(puppies) → <b>were</b>."},
+ {t:'장소 도치', q:"On the top of the hill ___.", ko:"언덕 꼭대기에 오래된 성이 서 있다.",
+  o:["stands an old castle","an old castle stands","stand an old castle"], a:0,
+  e:"장소부사구 도치, 주어 단수(castle) → <b>stands</b>."},
+ {t:'부정어 도치', q:"Rarely ___ Jane.", ko:"그는 제인을 거의 만날 수 없었다.",
+  o:["could he meet","he could meet","could he met"], a:0,
+  e:"부정어 + 조동사 could 도치 → 「could + 주어 + 동사원형」."},
+ {t:'부정어 도치', q:"Never ___ such a strange story.", ko:"그렇게 이상한 이야기는 들어본 적이 없다.",
+  o:["have I heard","I have heard","did I hear"], a:0,
+  e:"부정어 + 완료 → 「have + 주어 + heard」."},
+ {t:'부정어 도치', q:"Hardly ___ that she would become a CEO.", ko:"그녀는 자기가 CEO가 될 줄 거의 꿈꾸지 못했다.",
+  o:["did she dream","she dreamed","did she dreamed"], a:0,
+  e:"Hardly 도치 → 「did + 주어 + 동사원형(dream)」."},
+ {t:'so 동의', q:'"I\'m still very sleepy." — "So ___."', ko:'"나 아직 너무 졸려." "나도 그래."',
+  o:["am I","do I","I am"], a:0,
+  e:"be동사 문장 동의 → So am I."},
+ {t:'neither 동의', q:'"I can\'t go further. I\'m exhausted." — "Neither ___."', ko:'"더는 못 가겠어. 지쳤어." "나도 못 가."',
+  o:["can I","do I","am I"], a:0,
+  e:"can't에 부정 동의 → 「neither + can + 주어」."},
+ {t:'so 동의', q:'"I will go to the swimming pool tomorrow." — "So ___."', ko:'"나 내일 수영장 갈 거야." "나도 갈래."',
+  o:["will I","do I","am I"], a:0,
+  e:"will 문장 동의 → 「so + will + 주어」."},
+ {t:'neither 동의', q:'"John didn\'t do his homework at all." — "Neither ___."', ko:'"존은 숙제를 전혀 안 했어." "나도 안 했어."',
+  o:["did I","do I","was I"], a:0,
+  e:"didn't에 부정 동의 → 「neither + did + 주어」."},
+ {t:'neither 동의', q:'"My sister doesn\'t eat junk food." — "Neither ___."', ko:'"우리 언니는 정크푸드를 안 먹어." "나도 안 먹어."',
+  o:["do I","does I","did I"], a:0,
+  e:"부정 동의의 주어가 I이므로 → 「neither + do + I」."},
+ {t:'어순 배열', q:"밑줄(숲 속에)을 강조해 바르게 배열한 것은?", ko:"숲 속에 오두막 한 채가 서 있었다.",
+  o:["In the woods stood a cabin.","In the woods a cabin stood.","In the woods did stand a cabin."], a:0,
+  e:"장소부사구 도치 → 동사 <b>stood</b> + 주어."},
+ {t:'어순 배열', q:"밑줄(머리 위로)을 강조해 바르게 배열한 것은?", ko:"내 머리 위로 헬리콥터가 지나갔다.",
+  o:["Over my head passed a helicopter.","Over my head a helicopter passed.","Over my head did pass a helicopter."], a:0,
+  e:"방향부사구 도치 → 동사 <b>passed</b> + 주어."},
+ {t:'어순 배열', q:"밑줄(거의)을 강조해 바르게 배열한 것은?", ko:"그녀는 옷을 사러 쇼핑 가는 일이 거의 없다.",
+  o:["Rarely does she go shopping for clothes.","Rarely she goes shopping for clothes.","Rarely does she goes shopping for clothes."], a:0,
+  e:"Rarely 도치 → 「does + 주어 + 동사원형(go)」."},
+ {t:'어순 배열', q:"밑줄(적이 없다)을 강조해 바르게 배열한 것은?", ko:"나는 지금까지 그렇게 훌륭한 학생을 본 적이 없다.",
+  o:["Never have I seen such a good student.","Never I have seen such a good student.","Never have seen I such a good student."], a:0,
+  e:"부정어 + 완료 → 「have + 주어 + p.p.」."},
+ {t:'어순 배열', q:"밑줄(거의)을 강조해 바르게 배열한 것은?", ko:"우리는 밤에는 별을 거의 볼 수 없다.",
+  o:["Hardly can we see the stars at night.","Hardly we can see the stars at night.","Hardly can we saw the stars at night."], a:0,
+  e:"부정어 + 조동사 can 도치 → 「can + 주어 + 동사원형」."},
+ {t:'문장 전환', q:"부사구를 강조한 문장으로 바르게 바꾼 것은?", ko:"A little girl played in the park.",
+  o:["In the park played a little girl.","In the park a little girl played.","In the park did play a little girl."], a:0,
+  e:"장소부사구(In the park) 강조 도치 → 동사 <b>played</b> + 주어."},
+ {t:'문장 전환', q:"Rarely ___ after dinner. (부정어 강조)", ko:"She rarely drinks coffee after dinner.",
+  o:["Rarely does she drink coffee","Rarely she drinks coffee","Rarely does she drinks coffee"], a:0,
+  e:"Rarely 도치 → 「does + 주어 + 동사원형(drink)」."},
+ {t:'문장 전환', q:"___ he would fail the exam. (밑줄 Never로 시작)", ko:"He never dreamed he would fail the exam.",
+  o:["Never did he dream","Never he dreamed","Never did he dreamed"], a:0,
+  e:"부정어 Never 도치 → 「did + 주어 + 동사원형(dream)」."},
+ {t:'neither 동의', q:'"I don\'t want to go outside. It is too cold." — "Neither ___."', ko:'"나 밖에 나가기 싫어. 너무 추워." "나도 싫어."',
+  o:["do I","am I","did I"], a:0,
+  e:"don't에 부정 동의 → 「neither + do + I」."},
+ {t:'so 동의', q:'"I like listening to music." — "So ___."', ko:'"나 음악 듣는 거 좋아해." "나도 그래."',
+  o:["do I","am I","did I"], a:0,
+  e:"일반동사(like) 동의 → 「so + do + I」."},
+ {t:'문장 완성', q:"Hardly ___ any books these days. [read]", ko:"그녀는 요즈음 책을 거의 읽지 않는다.",
+  o:["does she read","she reads","does she reads"], a:0,
+  e:"Hardly 도치, 3인칭 → 「does + 주어 + 동사원형(read)」."},
+ {t:'문장 완성', q:"Rarely ___ work. [be late for]", ko:"그는 거의 직장에 지각하지 않았다.",
+  o:["was he late for","he was late for","did he late for"], a:0,
+  e:"Rarely + be동사 도치(과거) → 「was + 주어 ... late for」."},
+ {t:'틀린 곳 고치기', q:"Among the top ten ___. (틀린 곳 고치기)", ko:"Among the top ten three females were. → ?",
+  o:["were three females","three females were","was three females"], a:0,
+  e:"범위/장소 부사구 도치 → 동사 <b>were</b> + 주어(복수)."},
+ {t:'틀린 곳 고치기', q:"Never ___ to others. (틀린 곳 고치기)", ko:"Never he is kind to others. → ?",
+  o:["is he kind","he is kind","does he kind"], a:0,
+  e:"부정어 Never 도치 → be동사 <b>is</b> + 주어."},
+ {t:'틀린 곳 고치기', q:"___ because I didn't wear my glasses. (틀린 곳 고치기)", ko:"Hardly I could recognize him ... → ?",
+  o:["Hardly could I recognize him","Hardly I could recognize him","Hardly did I could recognize him"], a:0,
+  e:"부정어 + 조동사 could 도치 → 「could + 주어 + 동사원형」."},
+ {t:'빈칸 고르기', q:"Never ___ such a big waterfall.", ko:"그렇게 큰 폭포는 본 적이 없다.",
+  o:["I have seen","I haven't seen","have I seen","haven't seen"], a:2,
+  e:"부정어 + 완료 도치, 긍정문 → <b>have I seen</b>."},
+ {t:'빈칸 고르기', q:"He likes music, and ___.", ko:"그는 음악을 좋아하는데, 나도 그렇다.",
+  o:["so am I","so do I","so did I","so I do"], a:1,
+  e:"일반동사 현재 동의 → <b>so do I</b>."},
+ {t:'빈칸 고르기', q:"Into the pool ___.", ko:"아이들이 수영장 안으로 뛰어들었다.",
+  o:["do the children jump","did the children jump","the children jumped","jumped the children"], a:3,
+  e:"방향부사구 도치 → 동사 그대로 <b>jumped</b> + 주어(do/did 안 씀)."},
+ {t:'빈칸 고르기', q:'"Jane won\'t like the plan." — "___. He will be against it."', ko:'"제인은 그 계획을 안 좋아할 거야." "폴도 그래."',
+  o:["So is Paul","Neither will Paul","Neither Paul will","So will Paul"], a:1,
+  e:"won't에 부정 동의 → <b>Neither will Paul</b>."},
+ {t:'빈칸 고르기', q:"Hardly ___ my aunt.", ko:"나는 이모를 거의 방문하지 않았다.",
+  o:["I visited","did I visit","I did visit","did I visited"], a:1,
+  e:"Hardly 도치 → 「did + 주어 + 동사원형」 = <b>did I visit</b>."},
+ {t:'강조 영작', q:"밑줄(never)을 강조한 문장으로 옳은 것은?", ko:"He never dreamed that he would become a famous actor.",
+  o:["Never he dreamed that he would become a famous actor.","Never did he dream that he would become a famous actor.","Never did dream he that he would become a famous actor.","Never he did dream that he would become a famous actor."], a:1,
+  e:"Never 도치 → 「did + 주어 + 동사원형(dream)」."},
+ {t:'강조 영작', q:"밑줄(hardly)을 강조한 문장으로 옳은 것은?", ko:"I have hardly seen such a beautiful woman.",
+  o:["Hardly have seen such a beautiful woman.","Hardly I have seen such a beautiful woman.","Hardly have I seen such a beautiful woman.","Hardly I had seen such a beautiful woman."], a:2,
+  e:"Hardly + 완료 도치 → 「have + 주어(I) + p.p.」."},
+ {t:'강조 영작', q:"밑줄(on the desk)을 강조한 문장으로 옳은 것은?", ko:"A few books were on the desk.",
+  o:["On the desk were a few books.","On the desk a few books were.","On the desk was a few books.","On the desk a few books was."], a:0,
+  e:"장소부사구 도치, 주어 복수(books) → <b>were</b> + 주어."},
+ {t:'강조 영작', q:"밑줄(right over my head)을 강조한 문장으로 옳은 것은?", ko:"A bird passed right over my head.",
+  o:["Right over my head did pass a bird.","Right over my head passed a bird.","Right over my head a bird passed.","Right over my head a bird did pass."], a:1,
+  e:"방향부사구 도치 → 동사 <b>passed</b> + 주어(do 안 씀)."},
+ {t:'강조 영작', q:"밑줄(hardly)을 강조한 문장으로 옳은 것은?", ko:"We hardly thought that he passed the exam.",
+  o:["Hardly we thought that he passed the exam.","Hardly did we think that he passed the exam.","Hardly we did think that he passed the exam.","Hardly thought we that he passed the exam."], a:1,
+  e:"Hardly 도치 → 「did + 주어 + 동사원형(think)」."},
+ {t:'우리말 영작', q:"바르게 영작한 것은?", ko:"그는 그렇게 맛있는 음식을 결코 맛본 적이 없다.",
+  o:["Never has he tasted such a delicious dish.","He never has tasted such a delicious dish.","Never he has tasted such a delicious dish.","Never he tasted such a delicious dish."], a:0,
+  e:"부정어 + 완료 도치, 3인칭 → <b>Never has he tasted</b>."},
+ {t:'우리말 영작', q:"바르게 영작한 것은?", ko:"그는 인터넷 뱅킹을 거의 이용하지 않는다.",
+  o:["Rarely do he use internet banking.","Rarely does he use internet banking.","Rarely he uses internet banking.","Rarely he does use internet banking."], a:1,
+  e:"Rarely 도치, 3인칭 → <b>does he use</b>."},
+ {t:'우리말 영작', q:"밑줄(뉴욕에서)을 강조해 바르게 영작한 것은?", ko:"Jenny는 뉴욕에서 공부한다.",
+  o:["Jenny studies in New York.","Jenny does study in New York.","In New York studies Jenny.","In New York Jenny studies."], a:2,
+  e:"장소(In New York)를 강조 도치 → 동사 <b>studies</b> + 주어."},
+ {t:'우리말 영작', q:"바르게 영작한 것은?", ko:"우리 엄마는 뮤지컬을 좋아하는데, 나도 그렇다.",
+  o:["My mom likes musicals, and so does I.","My mom likes musicals, and so did I.","My mom likes musicals, and so do I.","My mom likes musicals, and so I do."], a:2,
+  e:"동의의 주어가 I → <b>so do I</b>."},
+ {t:'우리말 영작', q:"바르게 영작한 것은?", ko:"Sally는 회의에 가지 않았고, 나도 가지 않았다.",
+  o:["Sally didn't go to the meeting, and either did I.","Sally didn't go to the meeting, and neither I did.","Sally didn't go to the meeting, and neither did I.","Sally didn't go to the meeting, and neither do I."], a:2,
+  e:"didn't에 부정 동의 → <b>and neither did I</b>."},
+ {t:'어법 판단', q:"어법상 어색한 문장을 고르세요.", ko:"(도치 어순·do/did·수일치 주의)",
+  o:["Never do some kids eat mushroom.","Down the stream did the log float.","Rarely does he make speeches in public.","Between the two boys stood she."], a:1,
+  e:"②가 어색. 방향부사구 도치엔 did를 안 써요 → <b>Down the stream floated the log</b>."},
+ {t:'어법 판단', q:"어법상 어색한 문장을 고르세요.", ko:"(도치 어순 주의)",
+  o:["Under the sea is a white shark.","Located at the corner the bookstore is.","Rarely does she exercise on weekends.","Hardly can he walk after the accident."], a:1,
+  e:"②가 어색. 도치 어순 오류 → <b>Located at the corner is the bookstore</b>."},
+ {t:'어법 판단', q:"어법상 어색한 문장을 고르세요.", ko:"(부정어 도치 주의)",
+  o:["Never has he traveled to Europe.","A lot of people go to the city's festival, and so do I.","Behind Tom stood David.","Hardly I dreamed that I would meet him at the concert."], a:3,
+  e:"④가 어색. Hardly 도치가 안 됨 → <b>Hardly did I dream</b>."},
+ {t:'어법 판단', q:"어법상 어색한 문장을 고르세요.", ko:"(수일치 주의)",
+  o:["Never was he responsible for any mistakes.","Hardly do he show his feelings.","Down came the rain all night.","On top of the drawers are your socks."], a:1,
+  e:"②가 어색. 주어 he → does → <b>Hardly does he show</b>."},
+ {t:'어법 판단', q:"어법상 어색한 문장을 고르세요.", ko:"(so/neither + V + S 주의)",
+  o:["She can speak Japanese, and so can I.","I don't like soccer, and neither does my brother.","I didn't pay attention to the class, and neither did she.","Chris will learn Chinese during winter vacation, and so I will."], a:3,
+  e:"④가 어색. 「so + 조동사 + 주어」 → <b>and so will I</b>."},
 ];
 
 /* ===== 상태 ===== */
 let order=[], idx=0, score=0, wrong=[], answered=false, studentName="";
 const $=id=>document.getElementById(id);
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
-
-$('qCount').textContent=BANK.length;
 
 function show(screen){
   ['screenStart','screenQuiz','screenResult'].forEach(s=>$(s).classList.toggle('hidden', s!==screen));
@@ -291,23 +403,22 @@ function start(){
 function render(){
   answered=false;
   const q=BANK[order[idx]];
-  $('qtag').textContent=q.tag;
+  $('qtag').textContent=q.t;
   $('qprompt').innerHTML=q.q.replace('___','<span class="slot" id="slot">?</span>');
-  $('qko').textContent=q.ko;
+  $('qko').textContent=q.ko||'';
   $('feedback').innerHTML='';
-  // 보기 섞기 (정답 텍스트 추적)
-  const correctText=q.opts[q.ans];
-  const opts=shuffle(q.opts);
+  const correctText=q.o[q.a];
+  const opts=shuffle(q.o);
   const box=$('opts'); box.innerHTML='';
   opts.forEach(t=>{
     const b=document.createElement('button');
     b.className='opt';
-    b.innerHTML='<span class="mk">'+'</span><span>'+t+'</span>';
+    b.innerHTML='<span class="mk"></span><span class="ot"></span>';
+    b.querySelector('.ot').textContent=t;
     b.onclick=()=>choose(b, t, correctText);
     box.appendChild(b);
   });
-  const pct=Math.round(idx/BANK.length*100);
-  $('progBar').style.width=pct+'%';
+  $('progBar').style.width=Math.round(idx/BANK.length*100)+'%';
   $('progLabel').textContent=(idx+1)+' / '+BANK.length+' 문제';
 }
 
@@ -317,23 +428,20 @@ function choose(btn, text, correctText){
   buttons.forEach(b=>b.setAttribute('disabled',''));
   const slot=$('slot');
   if(text===correctText){
-    btn.classList.add('correct');
-    btn.querySelector('.mk').textContent='✓';
+    btn.classList.add('correct'); btn.querySelector('.mk').textContent='✓';
     score++; $('scorePill').textContent=score+'점';
     if(slot){ slot.textContent=text; slot.className='slot ok'; }
     $('feedback').innerHTML='<div class="ok-flash">정답! 👍</div>';
-    setTimeout(next, 200);   // 맞으면 0.2초 후 자동 진행
+    setTimeout(next, 200);
   }else{
-    btn.classList.add('wrong');
-    btn.querySelector('.mk').textContent='✕';
-    // 정답 버튼 강조
-    buttons.forEach(b=>{ if(b.querySelector('span:last-child').textContent===correctText){ b.classList.add('correct'); b.querySelector('.mk').textContent='✓'; }});
+    btn.classList.add('wrong'); btn.querySelector('.mk').textContent='✕';
+    buttons.forEach(b=>{ if(b.querySelector('.ot').textContent===correctText){ b.classList.add('correct'); b.querySelector('.mk').textContent='✓'; }});
     if(slot){ slot.textContent=text; slot.className='slot no'; }
     const q=BANK[order[idx]];
-    wrong.push({q:q.q, ko:q.ko, correct:correctText, exp:q.exp});
+    wrong.push({q:q.q, ko:q.ko, correct:correctText, exp:q.e});
     $('feedback').innerHTML=
-      '<div class="explain bad"><div class="h">💡 해설 · 정답은 '+correctText+'</div>'+
-      '<div class="b">'+q.exp+'</div></div>'+
+      '<div class="explain bad"><div class="h">💡 해설 · 정답은 “'+correctText+'”</div>'+
+      '<div class="b">'+q.e+'</div></div>'+
       '<button class="btn next-btn" id="nextBtn">다음 문제 ▶</button>';
     $('nextBtn').onclick=next;
   }
@@ -360,7 +468,6 @@ function result(){
   const d=new Date();
   $('rDate').textContent=d.getFullYear()+'. '+(d.getMonth()+1)+'. '+d.getDate()+'  도치구문 퀴즈';
   $('progBar').style.width='100%';
-  // 리뷰
   const rv=$('review'); rv.classList.remove('show'); rv.innerHTML='';
   $('reviewBtn').textContent='틀린 문제 다시 보기'+(wrong.length?' ('+wrong.length+')':'');
   show('screenResult');
@@ -369,34 +476,33 @@ function result(){
 function buildReview(){
   const rv=$('review');
   if(wrong.length===0){ rv.innerHTML='<div class="rv-perfect">틀린 문제가 없어요! 🎉</div>'; return; }
-  rv.innerHTML='<h3>틀린 문제 해설 ('+wrong.length+')</h3>'+wrong.map(w=>
-    '<div class="rv-item"><div class="rv-q">'+w.q.replace('___','<span class="a">'+w.correct+'</span>')+
-    '<br><span style="color:var(--gray);font-weight:600;font-size:.85em">'+w.ko+'</span></div>'+
-    '<div class="rv-e">'+w.exp+'</div></div>').join('');
+  rv.innerHTML='<h3>틀린 문제 해설 ('+wrong.length+')</h3>'+wrong.map(w=>{
+    const stem = w.q.includes('___') ? w.q.replace('___','<span class="a">'+w.correct+'</span>')
+                                     : (w.q+' <span class="a">→ '+w.correct+'</span>');
+    return '<div class="rv-item"><div class="rv-q">'+stem+
+    (w.ko?'<br><span style="color:var(--gray);font-weight:600;font-size:.85em">'+w.ko+'</span>':'')+'</div>'+
+    '<div class="rv-e">'+w.exp+'</div></div>';
+  }).join('');
 }
 
 /* ===== 카톡 공유 (결과 이미지) ===== */
 function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2600); }
-
 async function shareResult(){
   const card=$('resultCard');
   let canvas;
   try{ canvas=await html2canvas(card,{backgroundColor:'#ffffff',scale:2}); }
-  catch(e){ toast('이미지 생성에 실패했어요. 화면을 캡처해서 보내주세요.'); return; }
+  catch(e){ toast('이미지 생성 실패. 화면을 캡처해서 보내주세요.'); return; }
   const text=studentName+' 도치구문 퀴즈 결과: '+score+'/'+BANK.length+' ('+Math.round(score/BANK.length*100)+'%)';
   canvas.toBlob(async(blob)=>{
     const file=new File([blob],'inversion-quiz-result.png',{type:'image/png'});
-    // 1) 이미지 파일 공유 (카톡에 사진으로)
     if(navigator.canShare && navigator.canShare({files:[file]})){
       try{ await navigator.share({files:[file], title:'도치구문 퀴즈 결과', text}); return; }
       catch(e){ if(e.name==='AbortError') return; }
     }
-    // 2) 텍스트+링크 공유
     if(navigator.share){
       try{ await navigator.share({title:'도치구문 퀴즈 결과', text, url:location.href}); return; }
       catch(e){ if(e.name==='AbortError') return; }
     }
-    // 3) 이미지 저장 후 안내
     const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download='inversion-quiz-result.png'; a.click();
     toast('결과 이미지를 저장했어요. 카톡으로 보내주세요!');
   },'image/png');
